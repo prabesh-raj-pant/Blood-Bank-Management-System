@@ -11,14 +11,14 @@
 
   <body>
     <div class="container" id="container">
-        <div class="form-container sign-up">
-            <form method="POST" action="{% url 'signup' %}">
-                {% csrf_token %}
+      <div class="form-container sign-up">
+        <form action="{% url 'register' %}" method="post">
+          {% csrf_token %}
           <h1>Create Account</h1>
           <input type="text" name="first_name" placeholder="First Name" />
           <input type="text" name="last_name" placeholder="Last Name" />
           <input type="text" name="username" placeholder="Username" />
-          <input name="user-email" placeholder="Email" type="email" />
+          <input name="email" placeholder="Email" type="email" />
           <input type="password" name="pass1" placeholder="Password" />
           <input type="password" name="pass2" placeholder="Confirm Password" />
 
@@ -26,14 +26,14 @@
         </form>
       </div>
       <div class="form-container sign-in">
-        <form method="POST" action="{% url 'login' %}">
+        <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
-          <h1>Login</h1>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button type="submit" value="Login">Login</button>
+            <h1>Log In</h1>
+            <input type="text" name="username" placeholder="Username">
+            <input type="password"  name="password" placeholder="Password">
+            <button type="submit" value="Login">Log In</button>
         </form>
-      </div>
+    </div>
 
       <div class="toggle-container">
         <div class="toggle">
