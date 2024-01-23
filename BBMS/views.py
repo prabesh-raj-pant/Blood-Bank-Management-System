@@ -1,20 +1,43 @@
 # views.py
-from django.shortcuts import render,redirect
-from django.contrib.auth.models import User
-def signUp(request):
-    if request.method=='POST':
-        first_name=request.POST['first_name']
-        last_name=request.POST['last_name']
-        username=request.POST['username']
-        email=request.POST['email']
-        pass1=request.POST['pass1']
-        pass2=request.POST['pass2']
-        data=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=pass1)
-        data.save()
-        return redirect('login')
-    return render(request,'login.html')
+from django.shortcuts import render,redirect,HttpResponse
+from django.contrib.auth import authenticate, login as auth_login, logout
+from django.views import *
+from django.contrib.auth.models import User, auth
 
 def index(request):
-    return render(request,"index.html")
-def login(request):
-    return render(request,"login.html")
+    return render(request, 'index.html')
+
+
+
+def register(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        pass1 = request.POST.get('pass1')
+        pass2 = request.POST.get('pass2')
+
+        customer = User.objects.create_user(username, email, pass1)
+        customer.first_name = first_name
+        customer.last_name = last_name
+        customer.save()
+
+        return redirect('register')
+
+    return render(request, 'register/auth.html')
+
+class AuthView(View):
+    def get(self, request):
+        return render(request, 'register/auth.html')
+
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('index')
+        else:
+            return render(request, 'register/auth.html', {'error_message': 'Invalid login credentials'})
