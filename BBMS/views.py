@@ -5,9 +5,16 @@ from django.views import *
 from django.contrib.auth.models import User, auth
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request,'index.html')
 
+def about(request):
+    return render(request,'about.html')
 
+def donor(request):
+    return render(request,'donor.html')
+
+def bloodrequest(request):
+    return render(request,'bloodrequest.html')
 
 def register(request):
     if request.method == "POST":
