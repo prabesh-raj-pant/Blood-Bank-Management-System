@@ -22,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =os.getenv('SECRET_KEY',123)
+SECRET_KEY =os.getenv('SECRET_KEY','123')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv('DEBUG',True)=='True' else False
@@ -76,16 +77,20 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
 DATABASES = {
-        'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('db_NAME'),
-        'USER': os.getenv('db_USER') ,
-        'PASSWORD': os.getenv('db_PASSWORD'),
-        'HOST':os.getenv('db_HOST'),
-        'PORT':os.getenv('db_PORT'),
-    }
+	'default': {
+		'ENGINE': 'django.db.backends.mysql',
+		'NAME': 'mydb',
+		'USER': 'root',
+		'PASSWORD': 'admin',
+		'HOST':'localhost',
+		'PORT':'3306',
+	}
 }
+
+    
+
 
 
 # Password validation
