@@ -8,8 +8,7 @@ class Donor(models.Model):
     Donor_BloodType = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
 
-    def __str__(self):
-        return self.Donor_Name
+    
 
 class Receipent(models.Model):
     Receipent_Name = models.CharField(max_length=100)
