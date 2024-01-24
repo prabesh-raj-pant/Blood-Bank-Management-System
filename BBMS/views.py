@@ -16,6 +16,9 @@ def donor(request):
 def bloodrequest(request):
     return render(request,'bloodrequest.html')
 
+def dashboard(request):
+    return render(request,'dashboard.html')
+
 def register(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -45,6 +48,6 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('index')
+            return redirect('dashboard')
         else:
             return render(request, 'register/auth.html', {'error_message': 'Invalid login credentials'})

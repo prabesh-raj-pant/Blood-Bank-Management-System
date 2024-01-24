@@ -15,4 +15,5 @@ urlpatterns = [
     path('register/',register, name='register'),
     path('register/auth/', AuthView.as_view(), name='auth'),
     path('login/',user_login, name='login'),
+    path('dashboard/',dashboard,name='dashboard'),
 ]

@@ -19,6 +19,57 @@
             text-align: center;
             padding: 1em;
         }
+{% comment %}  {% endcomment %}
+nav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.dashboard {
+    padding: 20px;
+}
+footer {
+    background-color:#17183b;
+    color: #ffff;
+    padding: 30px ;
+    position: absolute;
+    bottom: 0px;
+    width:100%
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    text-align: left;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin: 0px;
+    padding-top: 0px;
+    background-color:#17183b;
+}
+
+
+.footer-bottom p {
+    margin: 0;
+}
+
+
 
         section {
             max-width: 600px;
@@ -74,14 +125,19 @@
 </head>
 <body>
     
-
+    <nav>
+        <a href="{% url 'about'%}">About</a>
+        <a href="{% url 'donor'%}">Donor</a>
+        <a href="{% url 'bloodrequest'%}">Blood Request</a>
+        <!-- Add more navigation links as needed -->
+    </nav>
     <header>
         <a href="{% static 'css/index.css' %}"><strong>MeroBloodBank</strong></a>
         <h1>Blood Recipient Request</h1>
     </header>
 
     <div class="request-body">
-        <img src="{%static'image/bloodrequest-removebg-preview.png'%}" alt="bloodRequestImage" srcset="">
+        <img src="{% static 'image/bloodrequest-removebg-preview.png' %}" alt="blood request" srcset="" />
     <section>
         <form action="#" method="post">
             <label for="name">Full Name:</label>
@@ -114,6 +170,22 @@
             <button type="submit">Submit Request</button>
         </form>
     </section>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Team Jay Nepal</h3>
+            </div>
+                
+            </div>
+      
+            <div class="footer-bottom">
+                <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
+            </div>
+        
+     
+    
+        
+     </footer>
 </div>
 </body>
 </html>
