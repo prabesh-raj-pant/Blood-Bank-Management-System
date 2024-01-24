@@ -5,8 +5,12 @@ User=get_user_model()
 class Donor(models.Model):
     Donor_Name = models.CharField(max_length=100)
     Donor_Age = models.IntegerField(default=10)
+    Donor_Address=models.CharField(max_length=100)
     Donor_BloodType = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    Donor_Email=models.CharField(max_length=100)
+    Donor_Phone=models.IntegerField(default=10)
+    Donor_DateTime = models.DateTimeField(auto_now_add=True)
 
     
 

@@ -1,12 +1,16 @@
 # views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib import messages
 from .models import *
 from .serializer import *
 from django.views import *
 from django.contrib.auth.models import User, auth
+from django.utils import timezone
+from datetime import timedelta
 
 def index(request):
     return render(request,'index.html')
@@ -15,7 +19,44 @@ def about(request):
     return render(request,'about.html')
 
 def donor(request):
-    return render(request,'donor.html')
+    if request.method == 'POST':
+        Donor_Name = request.POST.get('name')
+        Donor_Age = request.POST.get('Age') 
+        Donor_Address = request.POST.get('Address')
+        Donor_Email = request.POST.get('email')
+        Donor_BloodType = request.POST.get('bloodType')
+
+        # Get the current date and time
+        current_datetime = timezone.now()
+
+        # Check if the email is allowed to submit before 3 months
+        allowed_submission_date = current_datetime - timedelta(days=90)
+
+        # Check if there is a previous submission within the last 3 months
+        if Donor.objects.filter(Donor_Email=Donor_Email, Donor_DateTime__gte=allowed_submission_date).exists():
+            messages.error(request, 'You are not allowed to submit before 3 months.')
+            return render(request, 'donor.html')
+
+        donor = Donor()
+        donor.Donor_Name = Donor_Name
+        donor.Donor_Age = Donor_Age  
+        donor.Donor_Address = Donor_Address
+        donor.Donor_BloodType = Donor_BloodType
+        donor.Donor_Email = Donor_Email
+        donor.Donor_DateTime = current_datetime
+        donor.save()
+        messages.success(request, 'Form submitted successfully!')
+
+        return render(request, 'donor.html')
+
+    return render(request, 'donor.html')
+
+def get_object(self, pk):
+    try:
+        return Donor.objects.get(pk=pk)
+    except Donor.DoesNotExist:
+        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+
 
 def bloodrequest(request):
     return render(request,'bloodrequest.html')
@@ -36,7 +77,7 @@ def register(request):
         customer.first_name = first_name
         customer.last_name = last_name
         customer.save()
-
+        messages.success(request, 'Form submitted successfully!')
         return redirect('register')
 
     return render(request, 'register/auth.html')
