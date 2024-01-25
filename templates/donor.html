@@ -12,30 +12,37 @@
             margin: 0;
             padding: 0;
         }
- 
-        header {
-            background-color:#c13d39;
-            color: #fff;
-            text-align: center;
-            padding: 1em;
+
+        nav {
+            background-color: #ff5b4f;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
         }
-        {% comment %}  {% endcomment %}
-        nav a {
-            float: left;
-            display: block;
+
+        .logo {
             color: white;
-            text-align: center;
-            padding: 14px 16px;
             text-decoration: none;
+           font-size: 1.5em;
+            margin: 0;
+            padding: 0;
+        }
+        .logo img{
+            max-height:80px ;
+            margin: 0;
+            padding: 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 16px;
         }
 
         nav a:hover {
-            background-color: #ddd;
+            background-color: #ff7575;
             color: black;
-        }
-
-        .dashboard {
-            padding: 20px;
         }
         footer {
             background-color:#17183b;
@@ -72,7 +79,7 @@
         section {
             width: 500px;
             height: 590px;
-            max-width: 600px;
+            max-width: 900px;
             margin-top:100px;
             margin-left: 200px;
             font-size: larger;
@@ -111,7 +118,7 @@
         .donor{
             display: flex;
         }
-        img{
+        .donor img{
             height:400px;
             width:400px;
             margin-top:30px;
@@ -119,15 +126,7 @@
             
 
         }
-        a{
-           
-            font-size: xx-large;
-            text-decoration: none;
-            color: #f4f4f4;
-        
-            
-
-        }
+     
         .messages{
             list-style: none;
             background-color: #fc918d;
@@ -135,10 +134,18 @@
     </style>
 </head>
 <body>
-    <header>
-           <a href="{% static 'css/index.css' %}"><strong>MeroBloodBank</strong></a>  
-        <h1>Blood Donor Registration</h1>
-    </header> 
+    <nav>
+        <a class="logo" href="{% url 'dashboard'%}">
+            <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
+          MeroBloodBank</a>
+        <div>
+            <a href="{% url 'about'%}">About</a>
+            <a href="{% url 'donor'%}">Donor</a>
+            <a href="{% url 'bloodrequest'%}">Blood Request</a>
+           
+        </div>
+    </nav>
+  
     <div class="donor">
         <img src="{% static 'image/blooddonor2.png' %}" alt="blood Donor" srcset="" />
         
@@ -196,6 +203,17 @@
         </script>
     </section>
 </div>
-
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>Team Jay Nepal</h3>
+        </div>
+            
+        </div>
+  
+        <div class="footer-bottom">
+            <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
+        </div>
+ </footer>
 </body>
 </html>

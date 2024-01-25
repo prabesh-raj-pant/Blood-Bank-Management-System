@@ -13,66 +13,75 @@
             padding: 0;
         }
 
-        header {
-            background-color: #c13d39;
-            color: #fff;
-            text-align: center;
-            padding: 1em;
+        
+    nav {
+            background-color: #ff5b4f;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
         }
-{% comment %}  {% endcomment %}
-nav a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
 
-nav a:hover {
-    background-color: #ddd;
-    color: black;
-}
+        .logo {
+            color: white;
+            text-decoration: none;
+           font-size: 1.5em;
+            margin: 0;
+            padding: 0;
+        }
+        .logo img{
+            max-height:80px ;
+            margin: 0;
+            padding: 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 16px;
+        }
 
-.dashboard {
-    padding: 20px;
-}
-footer {
-    background-color:#17183b;
-    color: #ffff;
-    padding: 30px ;
-    position: absolute;
-    bottom: 0px;
-    width:100%
-}
+        nav a:hover {
+            background-color: #ff7575;
+            color: black;
+        }
 
-.footer-container {
-    display: flex;
-    justify-content: space-around;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.footer-section {
-    text-align: left;
-}
-
-.footer-bottom {
-    text-align: center;
-    margin: 0px;
-    padding-top: 0px;
-    background-color:#17183b;
-}
-
-
-.footer-bottom p {
-    margin: 0;
-}
-
+        footer {
+            background-color:#17183b;
+            color: #ffff;
+            padding: 30px ;
+            position: absolute;
+            bottom: 0px;
+            width:100%
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-section {
+            text-align: left;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin: 0px;
+            padding-top: 0px;
+            background-color:#17183b;
+        }
+    
+        
+        .footer-bottom p {
+            margin: 0;
+        }
+    
 
 
         section {
-            max-width: 600px;
+            max-width: 900px;
             margin: 20px auto;
             background-color: #fff;
             padding: 20px;
@@ -106,35 +115,32 @@ footer {
         button:hover {
             background-color: #c13d39;
         }
-        a{
-           
-           font-size: xx-large;
-           text-decoration: none;
-           color: #f4f4f4;
-
-       }
+    
        .request-body{
         display:flex;
        }
-       img{
+
+       .request-body img{
          position: relative;
          left:10rem;
        }
 
     </style>
+
 </head>
 <body>
-    
     <nav>
-        <a href="{% url 'about'%}">About</a>
-        <a href="{% url 'donor'%}">Donor</a>
-        <a href="{% url 'bloodrequest'%}">Blood Request</a>
-        <!-- Add more navigation links as needed -->
+        <a class="logo" href="{% url 'dashboard'%}">
+            <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
+          MeroBloodBank</a>
+        <div>
+            <a href="{% url 'about'%}">About</a>
+            <a href="{% url 'donor'%}">Donor</a>
+            <a href="{% url 'bloodrequest'%}">Blood Request</a>
+           
+        </div>
     </nav>
-    <header>
-        <a href="{% static 'css/index.css' %}"><strong>MeroBloodBank</strong></a>
-        <h1>Blood Recipient Request</h1>
-    </header>
+  
 
     <div class="request-body">
         <img src="{% static 'image/bloodrequest-removebg-preview.png' %}" alt="blood request" srcset="" />
@@ -182,5 +188,17 @@ footer {
         </form>
     </section>
 </div>
+ <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Team Jay Nepal</h3>
+            </div>
+                
+            </div>
+      
+            <div class="footer-bottom">
+                <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
+            </div>
+     </footer>
 </body>
 </html>

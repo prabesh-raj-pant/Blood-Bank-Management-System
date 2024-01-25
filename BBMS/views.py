@@ -88,7 +88,14 @@ def bloodrequest(request):
     return render(request,'bloodrequest.html')
 
 def dashboard(request):
-    return render(request,'dashboard.html')
+    donors = Donor.objects.all()
+    receipents = Receipent.objects.all()
+    context = {
+        'donors': donors,
+        'receipents': receipents,
+    }
+
+    return render(request, 'dashboard.html', context)
 
 def register(request):
     if request.method == "POST":
