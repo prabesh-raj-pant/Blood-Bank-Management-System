@@ -9,7 +9,7 @@ class Donor(models.Model):
     Donor_BloodType = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     Donor_Email=models.CharField(max_length=100)
-    Donor_Phone=models.IntegerField(default=10)
+    Donor_Phone=models.BigIntegerField(default=10)
     Donor_DateTime = models.DateTimeField(auto_now_add=True)
 
     
@@ -18,6 +18,11 @@ class Receipent(models.Model):
     Receipent_Name = models.CharField(max_length=100)
     Receipent_Age = models.IntegerField(default=10)
     Receipent_BloodType = models.CharField(max_length=50)
+    Receipent_Address = models.CharField(max_length=50)
+    Receipent_Email = models.CharField(max_length=50)
+    Receipent_Phone= models.BigIntegerField(default=50)
+    Receipent_Hospital= models.CharField(max_length=50)
+    Receipent_DateTime = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
 
     def __str__(self):

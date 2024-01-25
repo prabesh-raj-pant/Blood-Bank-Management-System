@@ -25,6 +25,7 @@ def donor(request):
         Donor_Address = request.POST.get('Address')
         Donor_Email = request.POST.get('email')
         Donor_BloodType = request.POST.get('bloodType')
+        Donor_Phone=request.POST.get('phone')
 
         # Get the current date and time
         current_datetime = timezone.now()
@@ -43,6 +44,7 @@ def donor(request):
         donor.Donor_Address = Donor_Address
         donor.Donor_BloodType = Donor_BloodType
         donor.Donor_Email = Donor_Email
+        donor.Donor_Phone=Donor_Phone
         donor.Donor_DateTime = current_datetime
         donor.save()
         messages.success(request, 'Form submitted successfully!')
@@ -57,8 +59,32 @@ def get_object(self, pk):
     except Donor.DoesNotExist:
         return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
-
+ 
 def bloodrequest(request):
+    if request.method=='POST':
+        Receipent_Name=request.POST.get('name')
+        Receipent_Age=request.POST.get('Age')
+        Receipent_BloodType=request.POST.get('bloodType')
+        Receipent_Address=request.POST.get('address')
+        Receipent_Email=request.POST.get('email')
+        Receipent_Phone=request.POST.get('phone')
+        Receipent_Hospital=request.POST.get('hospital')
+        
+        current_datetime = timezone.now()
+        
+        receipent=Receipent()
+        receipent.Receipent_Name=Receipent_Name
+        receipent.Receipent_Age=Receipent_Age
+        receipent.Receipent_BloodType=Receipent_BloodType
+        receipent.Receipent_Address=Receipent_Address
+        receipent.Receipent_Email=Receipent_Email
+        receipent.Receipent_Phone=Receipent_Phone
+        receipent.Receipent_Hospital=Receipent_Hospital
+        
+        receipent.Receipent_DateTime = current_datetime
+        receipent.save()
+        messages.success(request, 'Form submitted successfully!')
+        
     return render(request,'bloodrequest.html')
 
 def dashboard(request):
