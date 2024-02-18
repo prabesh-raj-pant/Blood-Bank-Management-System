@@ -107,9 +107,6 @@ def register(request):
         pass2 = request.POST.get('pass2')
 
         customer = User.objects.create_user(username, email, pass1)
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email address is already in use.')
-        
         customer.first_name = first_name
         customer.last_name = last_name
         customer.save()
