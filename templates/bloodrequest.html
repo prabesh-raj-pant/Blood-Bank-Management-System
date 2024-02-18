@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Recipient Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+    nav {
+            background-color: #ff5b4f;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+           font-size: 1.5em;
+            margin: 0;
+            padding: 0;
+        }
+        .logo img{
+            max-height:80px ;
+            margin: 0;
+            padding: 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 16px;
+        }
+
+        nav a:hover {
+            background-color: #ff7575;
+            color: black;
+        }
+
+        footer {
+            background-color:#17183b;
+            color: #ffff;
+            padding: 30px ;
+            bottom: 0px;
+            width:100%
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-section {
+            text-align: left;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin: 0px;
+            padding-top: 0px;
+            background-color:#17183b;
+        }
+    
+        
+        .footer-bottom p {
+            margin: 0;
+        }
+    
+
+
+        section {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #c13d39;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #c13d39;
+        }
+    
+       .request-body{
+        display:flex;
+       }
+
+       .request-body img{
+         position: relative;
+         left:10rem;
+       }
+
+    </style>
+
+</head>
+<body>
+    <nav>
+        <a class="logo" href="{% url 'dashboard'%}">
+            <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
+          MeroBloodBank</a>
+        <div>
+            <a href="{% url 'about'%}">About</a>
+            <a href="{% url 'donor'%}">Donor</a>
+            <a href="{% url 'bloodrequest'%}">Blood Request</a>
+           
+        </div>
+    </nav>
+  
+
+    <div class="request-body">
+        <img src="{% static 'image/bloodrequest-removebg-preview.png' %}" alt="blood request" srcset="" />
+    <section>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+        <form action="{% url 'bloodrequest'%}" method="post">
+            {% csrf_token %}
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="Address">Address:</label>
+            <input type="text" id="address" name="address" required>
+
+            <label for="Age">Age:</label>
+            <input type="number" id="address" name="Age" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="bloodType">Required Blood Type:</label>
+            <select id="bloodType" name="bloodType" required>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="hospital">Hospital Name:</label>
+            <input type="text" id="hospital" name="hospital" required>
+
+            <button type="submit">Submit Request</button>
+        </form>
+    </section>
+</div><footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Team Jay Nepal</h3>
+            </div>
+                
+            </div>
+      
+            <div class="footer-bottom">
+                <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
+            </div>
+     </footer> 
+</body>
+</html>

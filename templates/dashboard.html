@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MeroBloodBank</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+      }
+      
+      header {
+        background-color: red;
+        padding: 15px;
+        color: white;
+        text-align: center;
+      }
+      
+      nav {
+        background-color: #ff5b4f;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+      }
+      
+      .logo {
+        color: white;
+        text-decoration: none;
+        font-size: 1.5em;
+        margin: 0;
+        padding: 0;
+      }
+      .logo img {
+        max-height: 80px;
+        margin: 0;
+        padding: 0;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 14px 16px;
+      }
+      
+      nav a:hover {
+        background-color: #ff7575;
+        color: black;
+      }
+      
+      .dashboard {
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+      
+      .donor-section,
+      .requestor-section {
+        width: 48%;
+      }
+      
+      .toggle-btn {
+        display: flex;
+        margin: 5px;
+        margin-top: 10px;
+      }
+      
+      .toggle-btn button {
+        padding: 10px;
+        cursor: pointer;
+        border: none;
+        background-color: #ddd;
+        color: black;
+      }
+      
+      .toggle-btn button:hover {
+        background-color: #ccc;
+      }
+      
+      footer {
+        background-color: #17183b;
+        color: #ffff;
+        padding: 30px;
+        bottom: 0px;
+        width: 100%;
+      }
+      
+      .footer-container {
+        display: flex;
+        justify-content: space-around;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .footer-section {
+        text-align: left;
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        margin: 0px;
+        padding-top: 0px;
+        background-color: #17183b;
+      }
+      
+      .footer-bottom p {
+        margin: 0;
+      }
+      .post-container {
+        display: flex;
+        gap: 30px;
+      }
+      
+      .post {
+        width: 300px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+      }
+      
+      .post:hover {
+        transform: translateY(-5px);
+      }
+      
+      .post h3 {
+        margin-top: 0;
+      }
+      
+      .post p {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a class="logo" href="{% url 'dashboard' %}">
+        <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
+        MeroBloodBank
+      </a>
+      <div>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'donor' %}">Donor</a>
+        <a href="{% url 'bloodrequest' %}">Blood Request</a>
+      </div>
+    </nav>
+    <div class="toggle-btn">
+      <button onclick="toggleSection('donor')">Show Donor</button>
+      <button onclick="toggleSection('requestor')">Show Requestor</button>
+    </div>
+    <div class="dashboard">
+      <div class="donor-section">
+        <div class="post-container">
+          {% for donor in donors %}
+            <div class="post">
+              <h3>{{ donor.Donor_Name }}</h3>
+              <p>
+                <strong>Age:</strong> {{ donor.Donor_Age }}
+              </p>
+              <p>
+                <strong>Address:</strong> {{ donor.Donor_Address }}
+              </p>
+              <p>
+                <strong>Blood Type:</strong> {{ donor.Donor_BloodType }}
+              </p>
+              <p>
+                <strong>Email:</strong> {{ donor.Donor_Email }}
+              </p>
+              <p>
+                <strong>Phone:</strong> {{ donor.Donor_Phone }}
+              </p>
+              <p>
+                <strong>Submission Date:</strong> {{ donor.Donor_DateTime }}
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="requestor-section" style="display: none;">
+        <div class="post-container">
+          {% for receipent in receipents %}
+            <div class="post">
+              <h3>{{ receipent.Receipent_Name }}</h3>
+              <p>Age: {{ receipent.Receipent_Age }}</p>
+              <p>Address: {{ receipent.Receipent_Address }}</p>
+              <p>Email: {{ receipent.Receipent_Email }}</p>
+              <p>Blood Type: {{ receipent.Receipent_BloodType }}</p>
+              <p>Phone: {{ receipent.Receipent_Phone }}</p>
+              <p>Hospital: {{ receipent.Receipent_Hospital }}</p>
+              <p>Submitted at: {{ receipent.Receipent_DateTime }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+<footer>
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>Team Jay Nepal</h3>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
+      </div>
+    </footer> 
+    <script>
+      function toggleSection(section) {
+        const donorSection = document.querySelector('.donor-section')
+        const requestorSection = document.querySelector('.requestor-section')
+      
+        if (section === 'donor') {
+          donorSection.style.display = 'block'
+          requestorSection.style.display = 'none'
+        } else if (section === 'requestor') {
+          donorSection.style.display = 'none'
+          requestorSection.style.display = 'block'
+        }
+      }
+    </script>
+  </body>
+</html>

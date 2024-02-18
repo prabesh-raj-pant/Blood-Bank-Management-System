@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeroBloodBank</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: red;
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #ff5b4f;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+            margin: 0;
+            padding: 0;
+        }
+        .logo img{
+            max-height:80px ;
+            margin: 0;
+            padding: 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 16px;
+        }
+
+        nav a:hover {
+            background-color: #ff7575;
+            color: black;
+        }
+
+        .dashboard {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .donor-section, .requestor-section {
+            width: 48%; 
+        }
+
+        .toggle-btn {
+            display: flex;
+            margin: 5px;
+            margin-top: 10px;
+        }
+
+        .toggle-btn button {
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: #ddd;
+            color: black;
+        }
+
+        .toggle-btn button:hover {
+            background-color: #ccc;
+        }
+
+
+        footer {
+            background-color:#17183b;
+            color: #ffff;
+            padding: 30px ;
+            bottom: 0px;
+            width:100%
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-section {
+            text-align: left;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin: 0px;
+            padding-top: 0px;
+            background-color:#17183b;
+        }
+    
+        
+        .footer-bottom p {
+            margin: 0;
+        }
+    
+    </style>
+</head>
+<body>
+    <nav>
+        <a class="logo" href="{% url 'dashboard'%}">
+            <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
+          MeroBloodBank</a>
+        <div>
+            <a href="{% url 'about'%}">About</a>
+            <a href="{% url 'donor'%}">Donor</a>
+            <a href="{% url 'bloodrequest'%}">Blood Request</a>
+           
+        </div>
+    </nav>
+    <section>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis culpa quod exercitationem distinctio dolorum architecto id maxime iste, nostrum fuga!
+    </section>
+ 
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Team Jay Nepal</h3>
+            </div>
+                
+            </div>
+      
+            <div class="footer-bottom">
+                <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
+            </div>
+     </footer>
+
+</body>
+</html>
