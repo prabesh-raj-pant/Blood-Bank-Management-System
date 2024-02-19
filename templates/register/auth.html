@@ -10,24 +10,30 @@
   </head>
 
   <body>
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style=" background-color: #f8d7da; 
+              color: #721c24; 
+              padding: 10px; 
+              margin-bottom: 10px; 
+              width:500px;
+              text-align:center;
+              border: 1px solid #f5c6cb; 
+              border-radius: 50px 2px 50px 2px; 
+              list-style-type: none; ">{{ message }}</li>
+          {% endfor %}
+      </ul>
+  {% endif %}
     <div class="container" id="container">
       <div class="form-container sign-up">
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
         <form action="{% url 'register' %}" method="post">
           {% csrf_token %}
           <h1>Create Account</h1>
           <input type="text" name="first_name" placeholder="First Name" />
           <input type="text" name="last_name" placeholder="Last Name" />
-          <input type="text" name="username" placeholder="Username" />
           <input name="email" placeholder="Email" type="email" />
           <input type="password" name="pass1" placeholder="Password" />
-          <input type="password" name="pass2" placeholder="Confirm Password" />
 
           <button type="submit" value="Register">Register</button>
         </form>
@@ -36,7 +42,7 @@
         <form action="{% url 'login' %}" method="post">
             {% csrf_token %}
             <h1>Log In</h1>
-            <input type="text" name="username" placeholder="Username">
+            <input type="email" name="email" placeholder="Email">
             <input type="password"  name="password" placeholder="Password">
             <button type="submit" value="Login">Log In</button>
         </form>

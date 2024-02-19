@@ -104,8 +104,14 @@ def register(request):
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         pass1 = request.POST.get('pass1')
-        pass2 = request.POST.get('pass2')
 
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists')
+            return redirect('register')
+
+        # Split the email to set the username
+        username = email.split('@')[0]
+        
         customer = User.objects.create_user(username, email, pass1)
         customer.first_name = first_name
         customer.last_name = last_name
@@ -121,14 +127,16 @@ class AuthView(View):
 
 def user_login(request):
     if request.method == "POST":
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
+        username = email.split('@')[0]
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
             return redirect('dashboard')
         else:
-            return render(request, 'register/auth.html', {'error_message': 'Invalid login credentials'})
+            messages.error(request, 'Invalid login credentials')
+            return render(request, 'register/auth.html')
 
 class DonorList(APIView):
     def get(self, request):
@@ -243,4 +251,3 @@ class BloodBankDetail(APIView):
         bloodbank = self.get_object(pk)
         bloodbank.delete()
         return Response()
-
