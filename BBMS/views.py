@@ -2,8 +2,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.shortcuts import render,redirect,HttpResponse
-from django.contrib.auth import authenticate, login as auth_login, logout
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from .models import *
 from .serializer import *
@@ -13,6 +13,10 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
+from .forms import ProfileForm
+
+
+
 def index(request):
     return render(request,'index.html')
 
@@ -144,19 +148,29 @@ def logout(request):
 
 @login_required
 def dashboard(request):
-    user=request.user
-    donors= Donor.objects.filter(Donor_Email=user.email)
+    user = request.user
+    profile = user.profile if hasattr(user, 'profile') else None
+    form = ProfileForm(request.POST or None, request.FILES or None, instance=profile)
     
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect('dashboard')
+        
+    donors = Donor.objects.filter(Donor_Email=user.email)
     receipents = Receipent.objects.filter(Receipent_Email=user.email)
-    context={
-        'donors':donors,
-        'user':user,
+    
+    context = {
+        'user': user,
+        'form': form,
+        'donors': donors,
         'receipents': receipents,
     }
     
-    return render(request, 'dashboard.html',context)
-
-
+    return render(request, 'dashboard.html', context)
 
 
 
