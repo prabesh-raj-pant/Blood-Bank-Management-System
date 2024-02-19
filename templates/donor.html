@@ -126,10 +126,7 @@
 
         }
      
-        .messages{
-            list-style: none;
-            background-color: #fc918d;
-        }
+      
     </style>
 </head>
 <body>
@@ -153,7 +150,15 @@
         {% if messages %}
         <ul class="messages">
             {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}style=" background-color: #f8d7da; 
+                color: #721c24; 
+                padding: 10px; 
+                margin-bottom: 10px; 
+                width:500px;
+                text-align:center;
+                border: 1px solid #f5c6cb; 
+                border-radius: 50px 2px 50px 2px; 
+                list-style-type: none; ">{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}
@@ -167,9 +172,6 @@
 
             <label for="Address">Address:</label>
             <input type="text" id="Address" name="Address" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
 
             <label for="bloodType">Blood Type:</label>
             <select id="bloodType" name="bloodType" required>

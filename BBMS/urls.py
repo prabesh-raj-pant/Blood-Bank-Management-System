@@ -15,6 +15,10 @@ urlpatterns = [
     path('register/',register, name='register'),
     path('register/auth/', AuthView.as_view(), name='auth'),
     path('login/',user_login, name='login'),
+    
+    
+    path('logout/', logout, name='logout'),
+    
     path('dashboard/',dashboard,name='dashboard'),
     path('index/',index,name='index'),
     path('donors/', DonorList.as_view(), name='donor-list'),
