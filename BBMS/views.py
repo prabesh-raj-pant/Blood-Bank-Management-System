@@ -2,8 +2,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.shortcuts import render,redirect,HttpResponse
-from django.contrib.auth import authenticate, login as auth_login, logout
+from django.shortcuts import render,redirect
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from .models import *
 from .serializer import *
@@ -11,6 +11,11 @@ from django.views import *
 from django.contrib.auth.models import User, auth
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as django_logout
+from .forms import ProfileForm
+
+
 
 def index(request):
     return render(request,'index.html')
@@ -19,11 +24,12 @@ def about(request):
     return render(request,'about.html')
 
 def donor(request):
+    user=request.user
     if request.method == 'POST':
         Donor_Name = request.POST.get('name')
         Donor_Age = request.POST.get('Age') 
         Donor_Address = request.POST.get('Address')
-        Donor_Email = request.POST.get('email')
+        # Donor_Email = request.POST.get('email')
         Donor_BloodType = request.POST.get('bloodType')
         Donor_Phone=request.POST.get('phone')
 
@@ -34,7 +40,7 @@ def donor(request):
         allowed_submission_date = current_datetime - timedelta(days=90)
 
         # Check if there is a previous submission within the last 3 months
-        if Donor.objects.filter(Donor_Email=Donor_Email, Donor_DateTime__gte=allowed_submission_date).exists():
+        if Donor.objects.filter(Donor_Email=user.email, Donor_DateTime__gte=allowed_submission_date).exists():
             messages.error(request, 'You are not allowed to submit before 3 months.')
             return render(request, 'donor.html')
 
@@ -43,7 +49,7 @@ def donor(request):
         donor.Donor_Age = Donor_Age  
         donor.Donor_Address = Donor_Address
         donor.Donor_BloodType = Donor_BloodType
-        donor.Donor_Email = Donor_Email
+        donor.Donor_Email = user.email
         donor.Donor_Phone=Donor_Phone
         donor.Donor_DateTime = current_datetime
         donor.save()
@@ -87,15 +93,12 @@ def bloodrequest(request):
         
     return render(request,'bloodrequest.html')
 
-def dashboard(request):
-    donors = Donor.objects.all()
-    receipents = Receipent.objects.all()
-    context = {
-        'donors': donors,
-        'receipents': receipents,
-    }
 
-    return render(request, 'dashboard.html', context)
+
+
+
+
+
 
 def register(request):
     if request.method == "POST":
@@ -137,6 +140,41 @@ def user_login(request):
         else:
             messages.error(request, 'Invalid login credentials')
             return render(request, 'register/auth.html')
+
+def logout(request):
+    django_logout(request)
+    return redirect('register')
+
+
+@login_required
+def dashboard(request):
+    user = request.user
+    profile = user.profile if hasattr(user, 'profile') else None
+    form = ProfileForm(request.POST or None, request.FILES or None, instance=profile)
+    
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect('dashboard')
+        
+    donors = Donor.objects.filter(Donor_Email=user.email)
+    receipents = Receipent.objects.filter(Receipent_Email=user.email)
+    
+    context = {
+        'user': user,
+        'form': form,
+        'donors': donors,
+        'receipents': receipents,
+    }
+    
+    return render(request, 'dashboard.html', context)
+
+
+
+
 
 class DonorList(APIView):
     def get(self, request):

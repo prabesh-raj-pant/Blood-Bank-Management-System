@@ -51,13 +51,12 @@
             color: #ffff;
             padding: 30px ;
             bottom: 0px;
-            width:100%
         }
         
         .footer-container {
             display: flex;
             justify-content: space-around;
-            max-width: 1200px;
+            
             margin: 0 auto;
         }
         
@@ -147,7 +146,15 @@
         {% if messages %}
         <ul class="messages">
             {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}style=" background-color: #6acd6b; 
+                color: #721c24; 
+                padding: 10px; 
+                margin-bottom: 10px; 
+                width:500px;
+                text-align:center;
+                border: 1px solid #f5c6cb; 
+                border-radius: 50px 2px 50px 2px; 
+                list-style-type: none;">{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}
