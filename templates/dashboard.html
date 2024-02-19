@@ -5,137 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MeroBloodBank</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Arial', sans-serif;
-        background-color: #f0f0f0;
-      }
-      
-      header {
-        background-color: red;
-        padding: 15px;
-        color: white;
-        text-align: center;
-      }
-      
-      nav {
-        background-color: #ff5b4f;
-        overflow: hidden;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-      }
-      
-      .logo {
-        color: white;
-        text-decoration: none;
-        font-size: 1.5em;
-        margin: 0;
-        padding: 0;
-      }
-      .logo img {
-        max-height: 80px;
-        margin: 0;
-        padding: 0;
-      }
-      nav a {
-        color: white;
-        text-decoration: none;
-        padding: 14px 16px;
-      }
-      
-      nav a:hover {
-        background-color: #ff7575;
-        color: black;
-      }
-      
-      .dashboard {
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-      }
-      
-      .donor-section,
-      .requestor-section {
-        width: 48%;
-      }
-      
-      .toggle-btn {
-        display: flex;
-        margin: 5px;
-        margin-top: 10px;
-      }
-      
-      .toggle-btn button {
-        padding: 10px;
-        cursor: pointer;
-        border: none;
-        background-color: #ddd;
-        color: black;
-      }
-      
-      .toggle-btn button:hover {
-        background-color: #ccc;
-      }
-      
-      footer {
-        background-color: #17183b;
-        color: #ffff;
-        padding: 30px;
-        bottom: 0px;
-        width: 100%;
-      }
-      
-      .footer-container {
-        display: flex;
-        justify-content: space-around;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      
-      .footer-section {
-        text-align: left;
-      }
-      
-      .footer-bottom {
-        text-align: center;
-        margin: 0px;
-        padding-top: 0px;
-        background-color: #17183b;
-      }
-      
-      .footer-bottom p {
-        margin: 0;
-      }
-      .post-container {
-        display: flex;
-        gap: 30px;
-      }
-      
-      .post {
-        width: 300px;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease-in-out;
-      }
-      
-      .post:hover {
-        transform: translateY(-5px);
-      }
-      
-      .post h3 {
-        margin-top: 0;
-      }
-      
-      .post p {
-        margin-bottom: 10px;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}" />
   </head>
+
   <body>
     <nav>
       <a class="logo" href="{% url 'dashboard' %}">
@@ -146,11 +18,47 @@
         <a href="{% url 'about' %}">About</a>
         <a href="{% url 'donor' %}">Donor</a>
         <a href="{% url 'bloodrequest' %}">Blood Request</a>
+        
       </div>
     </nav>
+
+    <div class="container">
+      <h1>My Profile</h1>
+      <div class="profile-photo">
+        <img id="profile-photo-preview" src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}path/to/default/photo.jpg{% endif %}" alt="Profile Photo">
+    </div>
+    <form id="upload-form" method="post" enctype="multipart/form-data" class="upload-form">
+        {% csrf_token %}
+        <p class="photo-uplaodd">
+          
+          <label for="id_photo" class="custom-file-upload">
+              <input type="file" name="photo" id="id_photo" style="display: none;" onchange="previewProfilePhoto(event)">
+              <i class="fas fa-upload"></i> Browse
+          </label>
+          <button type="submit">Upload Photo</button>
+        </p>
+    </form>
+      <div class="profile-info">
+        <label for="first_name">First Name:</label>
+        <span>{{ user.first_name }}</span>
+      </div>
+      <div class="profile-info">
+        <label for="last_name">Last Name:</label>
+        <span>{{ user.last_name }}</span>
+      </div>
+      <div class="profile-info">
+        <label for="username">Username:</label>
+        <span>{{ user.username }}</span>
+      </div>
+      <div class="profile-info">
+        <label for="email">Email:</label>
+        <span>{{ user.email }}</span>
+      </div>
+      <a href="{% url 'logout' %}" class="btn-edit">Logout</a>
+    </div>
     <div class="toggle-btn">
-      <button onclick="toggleSection('donor')">Show Donor</button>
-      <button onclick="toggleSection('requestor')">Show Requestor</button>
+      <button onclick="toggleSection('donor')">Show Your donation</button>
+      <button onclick="toggleSection('requestor')">Show your request</button>
     </div>
     <div class="dashboard">
       <div class="donor-section">
@@ -199,7 +107,7 @@
       </div>
     </div>
 
-<footer>
+    <footer>
       <div class="footer-container">
         <div class="footer-section">
           <h3>Team Jay Nepal</h3>
@@ -209,7 +117,7 @@
       <div class="footer-bottom">
         <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
       </div>
-    </footer> 
+    </footer>
     <script>
       function toggleSection(section) {
         const donorSection = document.querySelector('.donor-section')
@@ -223,6 +131,17 @@
           requestorSection.style.display = 'block'
         }
       }
+      function previewProfilePhoto(event) {
+        var input = event.target;
+        var reader = new FileReader();
+    
+        reader.onload = function() {
+            var profilePhotoPreview = document.getElementById('profile-photo-preview');
+            profilePhotoPreview.src = reader.result;
+        };
+    
+        reader.readAsDataURL(input.files[0]);
+    }
     </script>
   </body>
 </html>
