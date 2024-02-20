@@ -1,11 +1,10 @@
 from django.views import View
 from django.contrib import admin
 from django.urls import path,include
-from . import views
+
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import *
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index, name='index'),
@@ -16,8 +15,9 @@ urlpatterns = [
     path('register/auth/', AuthView.as_view(), name='auth'),
     path('login/',user_login, name='login'),
     
-    
     path('logout/', logout, name='logout'),
+    
+    path('admin/logout/', custom_logout, name='custom_logout'),
     
     path('dashboard/',dashboard,name='dashboard'),
     path('landing_page/',landing_page,name='landing_page'),
