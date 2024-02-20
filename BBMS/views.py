@@ -2,7 +2,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from .models import *
@@ -181,6 +181,24 @@ def dashboard(request):
     }
     
     return render(request, 'dashboard.html', context)
+
+
+def delete_donor(request,pk):
+    try:
+        donor=Donor.objects.get(pk=pk)
+        donor.delete()
+        return redirect('dashboard')
+    except Donor.DoesNotExist:
+        return HttpResponse("no such task exists")
+
+
+def delete_receipent(request,pk):
+    try:
+        receipent=Receipent.objects.get(pk=pk)
+        receipent.delete()
+        return redirect('dashboard')
+    except Donor.DoesNotExist:
+        return HttpResponse("no such task exists")
 
 @login_required
 def landing_page(request):

@@ -74,6 +74,7 @@
     </div>
     <div class="dashboard">
       <div class="donor-section">
+        <h2>Donation</h2>
         <div class="post-container">
           {% for donor in donors %}
             <div class="post">
@@ -96,12 +97,15 @@
               <p>
                 <strong>Submission Date:</strong> {{ donor.Donor_DateTime }}
               </p>
+              <button>Edit</button>
+              <button><a href="/donors/{{donor.id}}/delete" style="text-decoration: none;">Delete</a></button> 
             </div>
           {% endfor %}
         </div>
       </div>
 
       <div class="requestor-section" style="display: none;">
+        <h2>Requests</h2>
         <div class="post-container">
           {% for receipent in receipents %}
             <div class="post">
@@ -113,6 +117,8 @@
               <p>Phone: {{ receipent.Receipent_Phone }}</p>
               <p>Hospital: {{ receipent.Receipent_Hospital }}</p>
               <p>Submitted at: {{ receipent.Receipent_DateTime }}</p>
+              <button>Edit</button>
+              <button><a href="/receipent/{{receipent.id}}/delete" style="text-decoration: none;">Delete</a></button> 
             </div>
           {% endfor %}
         </div>
@@ -154,6 +160,11 @@
     
         reader.readAsDataURL(input.files[0]);
     }
+
+
+
+
+      
     </script>
   </body>
 </html>
