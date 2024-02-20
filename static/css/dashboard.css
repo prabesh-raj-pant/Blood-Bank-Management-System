@@ -86,6 +86,7 @@ nav {
   margin: 0;
 }
 
+
 .logo {
   color: white;
   text-decoration: none;
@@ -93,11 +94,14 @@ nav {
   margin: 0;
   padding: 0;
 }
+
 .logo img {
   max-height: 80px;
   margin: 0;
   padding: 0;
 }
+
+
 nav a {
   color: white;
   text-decoration: none;
