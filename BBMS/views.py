@@ -15,11 +15,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
 from .forms import ProfileForm
 
-
-
 def index(request):
     return render(request,'index.html')
-
+@login_required
 def about(request):
     return render(request,'about.html')
 
@@ -100,6 +98,10 @@ def bloodrequest(request):
 
 
 
+def custom_logout(request):
+    # logout(request)
+    return render(request, 'register/auth.html')
+
 
 
 
@@ -141,10 +143,13 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('landing_page')
+            if user.is_superuser:
+                return redirect('admin:index')  
+            else:
+                return redirect('landing_page')  
         else:
             messages.error(request, 'Invalid login credentials')
-            return render(request, 'register/auth.html')
+    return render(request, 'register/auth.html')
 
 def logout(request):
     django_logout(request)

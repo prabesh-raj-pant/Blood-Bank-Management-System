@@ -18,15 +18,17 @@
             <a href="{% url 'donor'%}">Donor</a>
             <a href="{% url 'bloodrequest'%}">Blood Request</a>
             <a href="{% url 'dashboard' %}" class="profile_nav" style="  color: white;
-            text-decoration: none;
-            font-size: 1.5em;
-            margin: 0;
-            padding-top: 0;">
-                <img id="profile-photo-preview" src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}path/to/default/photo.jpg{% endif %}" alt="Profile Photo" style=" max-height: 50px;
-                background: rgb(255, 175, 156);
-                border: none;
-                border-radius: 50%; margin: 0; padding: 0;">
-            </a>
+        text-decoration: none;
+        margin: 0;
+        max-height: 50px;
+        max-width: 100px;">
+        <img id="profile-photo-preview" 
+     src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}{% static 'image/alt_profile.png' %}{% endif %}" 
+     alt="profile image"  
+     style="height: 50px; width: 50px; background: rgb(255, 175, 156); border: none; border-radius: 50%; margin: 0; padding: 0;"
+     onerror="this.onerror=null; this.src='{% static 'image/alt_profile.png' %}';">
+
+        </a>
         </div>
     </nav>
     <section>
