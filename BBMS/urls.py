@@ -20,6 +20,7 @@ urlpatterns = [
     path('logout/', logout, name='logout'),
     
     path('dashboard/',dashboard,name='dashboard'),
+    path('landing_page/',landing_page,name='landing_page'),
     path('index/',index,name='index'),
     path('donors/', DonorList.as_view(), name='donor-list'),
     path('donors/<int:pk>/', DonorDetail.as_view(), name='donor-detail'),

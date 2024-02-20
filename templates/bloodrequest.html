@@ -123,77 +123,146 @@
          left:10rem;
        }
 
+.post-container {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .post {
+    width: 300px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .post:hover {
+    transform: translateY(-5px);
+  }
+  
+  .post h3 {
+    margin-top: 0;
+  }
+  
+  .post p {
+    margin-bottom: 10px;
+  }
+  .requestor-section {
+    width: 48%;
+}
+
     </style>
 
 </head>
 <body>
     <nav>
-        <a class="logo" href="{% url 'dashboard'%}">
+        <a class="logo" href="{% url 'landing_page'%}">
             <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
           MeroBloodBank</a>
         <div>
             <a href="{% url 'about'%}">About</a>
             <a href="{% url 'donor'%}">Donor</a>
             <a href="{% url 'bloodrequest'%}">Blood Request</a>
-           
+            <a href="{% url 'dashboard' %}" class="profile_nav" style="  color: white;
+        text-decoration: none;
+        font-size: 1.5em;
+        margin: 0;
+        padding-top: 0;">
+            <img id="profile-photo-preview" src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}path/to/default/photo.jpg{% endif %}" alt="Profile Photo" style=" max-height: 50px;
+            background: rgb(255, 175, 156);
+            border: none;
+            border-radius: 50%; margin: 0; padding: 0;">
+        </a>
         </div>
     </nav>
   
 
     <div class="request-body">
-        <img src="{% static 'image/bloodrequest-removebg-preview.png' %}" alt="blood request" srcset="" />
+            <img src="{% static 'image/bloodrequest-removebg-preview.png' %}" alt="blood request" srcset="" />
+        <section>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}style=" background-color: #6acd6b; 
+                    color: #721c24; 
+                    padding: 10px; 
+                    margin-bottom: 10px; 
+                    width:500px;
+                    text-align:center;
+                    border: 1px solid #f5c6cb; 
+                    border-radius: 50px 2px 50px 2px; 
+                    list-style-type: none;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+            <form action="{% url 'bloodrequest'%}" method="post">
+                {% csrf_token %}
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="Address">Address:</label>
+                <input type="text" id="address" name="address" required>
+
+                <label for="Age">Age:</label>
+                <input type="number" id="address" name="Age" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="bloodType">Required Blood Type:</label>
+                <select id="bloodType" name="bloodType" required>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                </select>
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="hospital">Hospital Name:</label>
+                <input type="text" id="hospital" name="hospital" required>
+
+                <button type="submit">Submit Request</button>
+            </form>
+        </section>
+    </div>
     <section>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}style=" background-color: #6acd6b; 
-                color: #721c24; 
-                padding: 10px; 
-                margin-bottom: 10px; 
-                width:500px;
-                text-align:center;
-                border: 1px solid #f5c6cb; 
-                border-radius: 50px 2px 50px 2px; 
-                list-style-type: none;">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-        <form action="{% url 'bloodrequest'%}" method="post">
-            {% csrf_token %}
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="Address">Address:</label>
-            <input type="text" id="address" name="address" required>
-
-            <label for="Age">Age:</label>
-            <input type="number" id="address" name="Age" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="bloodType">Required Blood Type:</label>
-            <select id="bloodType" name="bloodType" required>
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-            </select>
-
-            <label for="phone">Phone Number:</label>
-            <input type="tel" id="phone" name="phone" required>
-
-            <label for="hospital">Hospital Name:</label>
-            <input type="text" id="hospital" name="hospital" required>
-
-            <button type="submit">Submit Request</button>
-        </form>
+        <div class="donor-section">
+            <div class="post-container">
+              {% for donor in donors %}
+                <div class="post">
+                  <h3>{{ donor.Donor_Name }}</h3>
+                  <p>
+                    <strong>Age:</strong> {{ donor.Donor_Age }}
+                  </p>
+                  <p>
+                    <strong>Address:</strong> {{ donor.Donor_Address }}
+                  </p>
+                  <p>
+                    <strong>Blood Type:</strong> {{ donor.Donor_BloodType }}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {{ donor.Donor_Email }}
+                  </p>
+                  <p>
+                    <strong>Phone:</strong> {{ donor.Donor_Phone }}
+                  </p>
+                  <p>
+                    <strong>Submission Date:</strong> {{ donor.Donor_DateTime }}
+                  </p>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+    
     </section>
-</div><footer>
+    <footer>
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Team Jay Nepal</h3>

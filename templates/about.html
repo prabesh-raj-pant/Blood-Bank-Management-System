@@ -5,128 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MeroBloodBank</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-        }
-
-        header {
-            background-color: red;
-            padding: 15px;
-            color: white;
-            text-align: center;
-        }
-
-        nav {
-            background-color: #ff5b4f;
-            overflow: hidden;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-        }
-
-        .logo {
-            color: white;
-            text-decoration: none;
-            font-size: 1.5em;
-            margin: 0;
-            padding: 0;
-        }
-        .logo img{
-            max-height:80px ;
-            margin: 0;
-            padding: 0;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 14px 16px;
-        }
-
-        nav a:hover {
-            background-color: #ff7575;
-            color: black;
-        }
-
-        .dashboard {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .donor-section, .requestor-section {
-            width: 48%; 
-        }
-
-        .toggle-btn {
-            display: flex;
-            margin: 5px;
-            margin-top: 10px;
-        }
-
-        .toggle-btn button {
-            padding: 10px;
-            cursor: pointer;
-            border: none;
-            background-color: #ddd;
-            color: black;
-        }
-
-        .toggle-btn button:hover {
-            background-color: #ccc;
-        }
-
-
-        footer {
-            background-color:#17183b;
-            color: #ffff;
-            padding: 30px ;
-            bottom: 0px;
-            width:100%
-        }
-        
-        .footer-container {
-            display: flex;
-            justify-content: space-around;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .footer-section {
-            text-align: left;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            margin: 0px;
-            padding-top: 0px;
-            background-color:#17183b;
-        }
-    
-        
-        .footer-bottom p {
-            margin: 0;
-        }
-    
-    </style>
+ 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/about.css' %}" />
 </head>
 <body>
     <nav>
-        <a class="logo" href="{% url 'dashboard'%}">
+        <a class="logo" href="{% url 'landing_page'%}">
             <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
           MeroBloodBank</a>
         <div>
             <a href="{% url 'about'%}">About</a>
             <a href="{% url 'donor'%}">Donor</a>
             <a href="{% url 'bloodrequest'%}">Blood Request</a>
-           
+            <a href="{% url 'dashboard' %}" class="profile_nav" style="  color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+            margin: 0;
+            padding-top: 0;">
+                <img id="profile-photo-preview" src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}path/to/default/photo.jpg{% endif %}" alt="Profile Photo" style=" max-height: 50px;
+                background: rgb(255, 175, 156);
+                border: none;
+                border-radius: 50%; margin: 0; padding: 0;">
+            </a>
         </div>
     </nav>
     <section>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis culpa quod exercitationem distinctio dolorum architecto id maxime iste, nostrum fuga!
+          <div class="container">
+        <h1>About Us</h1>
+        <p>Welcome to Blood Bank Management System, your trusted partner in ensuring timely access to life-saving blood products. At Blood Bank Management System, we are committed to facilitating seamless blood donation, collection, processing, and distribution, thereby playing a pivotal role in enhancing healthcare outcomes and saving lives.</p>
+        
+        <h2>Our Mission</h2>
+        <p>Our mission is to bridge the gap between blood donors and recipients by leveraging innovative technology and robust infrastructure to ensure a steady supply of safe and quality blood products. We strive to empower communities to participate in blood donation drives, fostering a culture of altruism and solidarity.</p>
+        
+        <h2>Our Vision</h2>
+        <p>Our vision is to create a world where every individual has access to adequate and timely blood transfusions, irrespective of geographical barriers or socioeconomic factors. We aspire to be the cornerstone of blood banking solutions, setting benchmarks in efficiency, reliability, and ethical standards.</p>
+        
+        <h2>What Sets Us Apart</h2>
+        <ul>
+            <li>Technology-Driven Approach</li>
+            <li>Commitment to Quality</li>
+            <li>Community Engagement</li>
+            <li>Collaborative Partnerships</li>
+        </ul>
+        
+        <h2>Our Services</h2>
+        <ol>
+            <li>Donor Registration</li>
+            <li>Blood Request Registration</li>
+            <li>Provide details of the blood donor</li>
+        </ol>
+        
+        <h2>Get Involved</h2>
+        <p>Join us in our mission to save lives. Whether you're a potential donor, a healthcare provider, or a community organization, there are numerous ways to get involved and make a difference. Together, we can create a world where no one suffers due to a shortage of blood.</p>
+        
+        <p>Thank you for choosing Blood Bank Management System as your partner in saving lives. Your support fuels our commitment to excellence and drives us towards our shared vision of a healthier, brighter future.</p>
+        
+        {% comment %} <p><a href="contact.html">Contact Us</a> to learn more about how you can contribute or to inquire about our services.</p> {% endcomment %}
+    </div>
     </section>
  
 
