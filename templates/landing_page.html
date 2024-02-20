@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MeroBloodBank</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing_page.css' %}" />
+  </head>
+
+  <body>
+    <nav>
+      <a class="logo" href="{% url 'landing_page' %}">
+        <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
+        MeroBloodBank
+      </a>
+      <div>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'donor' %}">Donor</a>
+        <a href="{% url 'bloodrequest' %}">Blood Request</a>
+        <a href="{% url 'dashboard' %}" class="profile_nav" style="  color: white;
+        text-decoration: none;
+        font-size: 1.5em;
+        margin: 0;
+        padding-top: 0;">
+            <img id="profile-photo-preview" src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}path/to/default/photo.jpg{% endif %}" alt="Profile Photo" style=" max-height: 50px;
+            background: rgb(255, 175, 156);
+            border: none;
+            border-radius: 50%; margin: 0; padding: 0;">
+        </a>
+        
+      </div>
+    </nav>
+    <div class="container">
+        <h1>Welcome to Blood Bank Management System</h1>
+        
+        <div class="section">
+            <div class="image">
+                <img src="https://via.placeholder.com/400" alt="Blood Donation">
+            </div>
+            <div class="slogan">
+                <h2>Donate Blood, Save Lives</h2>
+                <p>Join us in our mission to ensure a steady supply of safe and quality blood products for those in need.</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="slogan">
+                <h2>Together, We Can Make a Difference</h2>
+                <p>Your donation can make a life-changing impact. Be a hero today.</p>
+            </div>
+            <div class="image">
+                <img src="https://via.placeholder.com/400" alt="Blood Bank">
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="image">
+                <img src="https://via.placeholder.com/400" alt="Blood Transfusion">
+            </div>
+            <div class="slogan">
+                <h2>Providing Hope and Healing</h2>
+                <p>With your support, we can ensure that no patient goes without the life-saving transfusions they need.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>Team Jay Nepal</h3>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
+      </div>
+    </footer>
+   
+  </body>
+</html>

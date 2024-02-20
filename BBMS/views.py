@@ -29,7 +29,6 @@ def donor(request):
         Donor_Name = request.POST.get('name')
         Donor_Age = request.POST.get('Age') 
         Donor_Address = request.POST.get('Address')
-        # Donor_Email = request.POST.get('email')
         Donor_BloodType = request.POST.get('bloodType')
         Donor_Phone=request.POST.get('phone')
 
@@ -67,6 +66,7 @@ def get_object(self, pk):
 
  
 def bloodrequest(request):
+    context={}
     if request.method=='POST':
         Receipent_Name=request.POST.get('name')
         Receipent_Age=request.POST.get('Age')
@@ -90,8 +90,13 @@ def bloodrequest(request):
         receipent.Receipent_DateTime = current_datetime
         receipent.save()
         messages.success(request, 'Form submitted successfully!')
+        donors = Donor.objects.filter(Donor_BloodType=Receipent_BloodType)
         
-    return render(request,'bloodrequest.html')
+        context = {
+            'donors': donors,
+        }
+    
+    return render(request, 'bloodrequest.html', context)
 
 
 
@@ -136,7 +141,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            return redirect('dashboard')
+            return redirect('landing_page')
         else:
             messages.error(request, 'Invalid login credentials')
             return render(request, 'register/auth.html')
@@ -172,7 +177,11 @@ def dashboard(request):
     
     return render(request, 'dashboard.html', context)
 
-
+@login_required
+def landing_page(request):
+    user = request.user
+    profile = user.profile if hasattr(user, 'profile') else None
+    return render(request,'landing_page.html')
 
 
 
