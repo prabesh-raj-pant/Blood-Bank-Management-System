@@ -1,7 +1,6 @@
-from django.views import View
 from django.contrib import admin
-from django.urls import path,include
-from .views import index, about, donor, bloodrequest, register, AuthView, user_login, logout, custom_logout, dashboard, landing_page, delete_donor, delete_receipent, edit_donor, edit_receipent
+from django.urls import path
+from .views import *
 
 
 from django.conf import settings
@@ -11,6 +10,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index, name='index'),
     path('about/',about,name='about'),
+    path('index_about',index_about,name='index_about'),
+    
     path('donor/',donor,name='donor'),
     path('bloodrequest/',bloodrequest,name='bloodrequest'),
     path('register/',register, name='register'),
