@@ -24,9 +24,13 @@ from .forms import DonorForm, ReceipentForm
 
 def index(request):
     return render(request,'index.html')
+
 @login_required
 def about(request):
     return render(request,'about.html')
+
+def index_about(request):
+    return render(request,'index_about.html')
 
 def donor(request):
     user=request.user
@@ -160,7 +164,7 @@ def user_login(request):
 
 def logout(request):
     django_logout(request)
-    return redirect('register')
+    return redirect('index')
 
 
 @login_required

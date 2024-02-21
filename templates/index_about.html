@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeroBloodBank</title>
+ 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/about.css' %}" />
+</head>
+<body>
+    <nav>
+        <a class="logo" href="{% url 'index'%}">
+            <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
+          MeroBloodBank</a>
+        <div>
+            <a href="{% url 'about'%}">About</a>
+            <a href="{% url 'register' %}" class="profile_nav" style="  color: white;
+            text-decoration: none;
+            margin: 0;
+            max-height: 50px;
+            max-width: 100px;">
+            <img id="profile-photo-preview" 
+         src="{% static 'image/index_profile.png' %}"
+         alt="profile image"  
+         style="height: 40px; width: 40px; border: none; border-radius: 50%; margin: 0; padding: 0;">
+        </a>
+        </div>
+    </nav>
+    <section>
+          <div class="container">
+        <h1>About Us</h1>
+        <p>Welcome to Blood Bank Management System, your trusted partner in ensuring timely access to life-saving blood products. At Blood Bank Management System, we are committed to facilitating seamless blood donation, collection, processing, and distribution, thereby playing a pivotal role in enhancing healthcare outcomes and saving lives.</p>
+        
+        <h2>Our Mission</h2>
+        <p>Our mission is to bridge the gap between blood donors and recipients by leveraging innovative technology and robust infrastructure to ensure a steady supply of safe and quality blood products. We strive to empower communities to participate in blood donation drives, fostering a culture of altruism and solidarity.</p>
+        
+        <h2>Our Vision</h2>
+        <p>Our vision is to create a world where every individual has access to adequate and timely blood transfusions, irrespective of geographical barriers or socioeconomic factors. We aspire to be the cornerstone of blood banking solutions, setting benchmarks in efficiency, reliability, and ethical standards.</p>
+        
+        <h2>What Sets Us Apart</h2>
+        <ul>
+            <li>Technology-Driven Approach</li>
+            <li>Commitment to Quality</li>
+            <li>Community Engagement</li>
+            <li>Collaborative Partnerships</li>
+        </ul>
+        
+        <h2>Our Services</h2>
+        <ol>
+            <li>Donor Registration</li>
+            <li>Blood Request Registration</li>
+            <li>Provide details of the blood donor</li>
+        </ol>
+        
+        <h2>Get Involved</h2>
+        <p>Join us in our mission to save lives. Whether you're a potential donor, a healthcare provider, or a community organization, there are numerous ways to get involved and make a difference. Together, we can create a world where no one suffers due to a shortage of blood.</p>
+        
+        <p>Thank you for choosing Blood Bank Management System as your partner in saving lives. Your support fuels our commitment to excellence and drives us towards our shared vision of a healthier, brighter future.</p>
+        
+        {% comment %} <p><a href="contact.html">Contact Us</a> to learn more about how you can contribute or to inquire about our services.</p> {% endcomment %}
+    </div>
+    </section>
+ 
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Team Jay Nepal</h3>
+            </div>
+                
+            </div>
+      
+            <div class="footer-bottom">
+                <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
+            </div>
+     </footer>
+
+</body>
+</html>

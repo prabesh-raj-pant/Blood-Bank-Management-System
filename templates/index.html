@@ -1,64 +1,69 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MeroBloodBank</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}"/>
-    <style>
-        html{
-            height:100%
-        }
-        body,ul,li{
-      margin: 0;
-      padding: 0;
-        height: 100%;
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing_page.css' %}" />
+  </head>
 
-    } 
+  <body>
+    <nav>
+      <a class="logo" href="{% url 'index' %}">
+        <img src="{% static 'image/blood.png' %}" alt="" srcset="" />
+        MeroBloodBank
+      </a>
+      <div>
+        <a href="{% url 'index_about' %}">About</a>
+        <a href="{% url 'register' %}" class="profile_nav" style="  color: white;
+        text-decoration: none;
+        margin: 0;
+        max-height: 50px;
+        max-width: 100px;">
+        <img id="profile-photo-preview" 
+     src="{% static 'image/index_profile.png' %}"
+     alt="profile image"  
+     style="height: 40px; width: 40px; border: none; border-radius: 50%; margin: 0; padding: 0;">
+
+        </a>
+      </div>
+    </nav>
+
+    <div class="container" style="display: flex;
     
-    </style>
-
-</head>
-<body>
-    <header>
- <nav>
-    <div class="brand"> 
-        <img src="{% static 'image/bloodlogo-removebg-preview.png' %}" alt="" srcset="" />
-
-    <strong>MeroBloodBank</strong></div>
-   
-        <ul class="bar">
-            <li><a href="{% url 'index' %}">Home</a></li>
-            
-            <li><a href="{% url 'about' %}">About</a></li>
-        </ul>   
-
-     <button class="btn" ><a href="{% url 'register' %}">Log In</a> </button>
- </nav>
- <main>
-    <div >
-       <h1>Welcome to  <strong style="color: #c13d39;">MeroBloodBank </strong></h1><br>
-        <p class="text">Instead of giving your blood to mosquitoes,give it to someone who needs it   </p> <br>
-        <button class="btnM">Get Started</button>
-        </div>
-      
-        <img src="{% static 'image/blood-donation-vector-illustration-removebg-preview.png' %}" alt="landingImage" srcset="" />
-    </main>
- <footer>
-    <div class="footer-container">
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;">
+      <div class="image-container" style="margin-right: 30px;">
+        <img src="{% static 'image/index_image.png' %}" alt="donate blood" srcset="" />
+      </div>
+      <div class="content">
+          <div class="slogan">
+              <p><h2>रक्तदान जीवनदान। हरेक ३ महिनामा रक्तदान जीवनदान गरौ।</h2></p>
+          </div>
+          <div class="article">
+              <p style="margin-top: 25px;">MeroBloodBank is your comprehensive solution for managing blood resources efficiently and effectively. With our advanced platform, we ensure that blood donation, storage, and distribution are streamlined, making it easier for donors, recipients, and healthcare professionals.</p>
+              <p>For every 1000 who can Donate Blood
+                only four do! What about you! <br>
+                Give Blood and gift a life.</p>
+              <p><h1>कसैले सबै गर्न सक्दैन, तर सबैले केहि गर्न सक्छन् - रक्तदान </h1></p>
+              
+          </div>
+      </div>
+  </div>
+    <footer>
+      <div class="footer-container">
         <div class="footer-section">
-            <h3>Team Jay Nepal</h3>
+          <h3>Team Jay Nepal</h3>
         </div>
-            
-        </div>
-  
-        <div class="footer-bottom">
-            <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
-        </div>
-    
- 
+      </div>
 
-    
- </footer>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Team Jay Nepal. All rights reserved.</p>
+      </div>
+    </footer>
+   
+  </body>
 </html>
