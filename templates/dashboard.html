@@ -97,7 +97,7 @@
               <p>
                 <strong>Submission Date:</strong> {{ donor.Donor_DateTime }}
               </p>
-              <button>Edit</button>
+              <button><a href="/donor/{{donor.id}}/edit_donor">Edit</a></button>
               <button><a href="/donors/{{donor.id}}/delete" style="text-decoration: none;">Delete</a></button> 
             </div>
           {% endfor %}
@@ -110,14 +110,14 @@
           {% for receipent in receipents %}
             <div class="post">
               <h3>{{ receipent.Receipent_Name }}</h3>
-              <p>Age: {{ receipent.Receipent_Age }}</p>
-              <p>Address: {{ receipent.Receipent_Address }}</p>
-              <p>Email: {{ receipent.Receipent_Email }}</p>
-              <p>Blood Type: {{ receipent.Receipent_BloodType }}</p>
-              <p>Phone: {{ receipent.Receipent_Phone }}</p>
-              <p>Hospital: {{ receipent.Receipent_Hospital }}</p>
-              <p>Submitted at: {{ receipent.Receipent_DateTime }}</p>
-              <button>Edit</button>
+              <p><strong>Age:</strong> {{ receipent.Receipent_Age }}</p>
+              <p><strong>Address:</strong> {{ receipent.Receipent_Address }}</p>
+              <p><strong>Blood Type:</strong> {{ receipent.Receipent_BloodType }}</p>
+              <p><strong>Email:</strong> {{ receipent.Receipent_Email }}</p>
+              <p><strong>Phone:</strong> {{ receipent.Receipent_Phone }}</p>
+              <p><strong>Hospital:</strong> {{ receipent.Receipent_Hospital }}</p>
+              <p><strong>Submitted at:</strong>{{ receipent.Receipent_DateTime }}</p>
+              <button><a href="/receipent/{{receipent.id}}/edit_receipent">Edit</a></button>
               <button><a href="/receipent/{{receipent.id}}/delete" style="text-decoration: none;">Delete</a></button> 
             </div>
           {% endfor %}
