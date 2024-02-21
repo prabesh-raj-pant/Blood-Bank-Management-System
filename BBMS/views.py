@@ -7,19 +7,14 @@ from django.contrib import messages
 from .models import *
 from .serializer import *
 from django.views import *
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
 from .forms import ProfileForm
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.shortcuts import render
 from .models import Donor
-from django.views.decorators.http import require_POST
-from django.shortcuts import  get_object_or_404
-from django import forms
-from .forms import DonorForm, ReceipentForm
 
 
 def index(request):
@@ -32,6 +27,7 @@ def about(request):
 def index_about(request):
     return render(request,'index_about.html')
 
+@login_required
 def donor(request):
     user=request.user
     if request.method == 'POST':
@@ -42,6 +38,7 @@ def donor(request):
         Donor_Phone=request.POST.get('phone')
 
         # Get the current date and time
+        timezone.activate('Asia/Kolkata')
         current_datetime = timezone.now()
 
         # Check if the email is allowed to submit before 3 months
@@ -73,7 +70,7 @@ def get_object(self, pk):
     except Donor.DoesNotExist:
         return HttpResponse({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
- 
+@login_required
 def bloodrequest(request):
     context={}
     if request.method=='POST':
@@ -84,7 +81,7 @@ def bloodrequest(request):
         Receipent_Email=request.POST.get('email')
         Receipent_Phone=request.POST.get('phone')
         Receipent_Hospital=request.POST.get('hospital')
-        
+        timezone.activate('Asia/Kolkata')
         current_datetime = timezone.now()
         
         receipent=Receipent()
@@ -193,6 +190,48 @@ def dashboard(request):
     
     return render(request, 'dashboard.html', context)
 
+@login_required
+def edit_donor(request, pk):
+        donor = Donor.objects.get(pk=pk)
+        if request.method == "POST":
+            donor.Donor_Name = request.POST.get('name')
+            donor.Donor_Age = request.POST.get('Age')
+            donor.Donor_Address = request.POST.get('Address')
+            donor.Donor_BloodType = request.POST.get('bloodType')
+            donor.Donor_Phone = request.POST.get('phone')
+            timezone.activate('Asia/Kolkata')
+            donor.Donor_DateTime = timezone.now()
+            donor.save()
+            return redirect('dashboard')  
+        context = {
+            'donor': donor
+        }
+        return render(request, 'edit_donor.html', context)
+     
+     
+@login_required   
+def edit_receipent(request, pk):
+    try:
+        receipent = Receipent.objects.get(pk=pk)
+        if request.method == "POST":
+            receipent.Receipent_Name = request.POST.get('name')
+            receipent.Receipent_Age = request.POST.get('Age')
+            receipent.Receipent_Address = request.POST.get('Address')
+            receipent.Receipent_BloodType = request.POST.get('bloodType')
+            receipent.Receipent_Phone = request.POST.get('phone')
+            receipent.Receipent_Hospital = request.POST.get('hospital')
+            timezone.activate('Asia/Kolkata')
+            receipent.Receipent_DateTime = timezone.now()
+            receipent.save()
+            return redirect('dashboard')  
+        context = {
+            'receipent': receipent
+        }
+        return render(request, 'edit_receipent.html', context)
+    except Receipent.DoesNotExist:
+        return HttpResponse("no data exist")
+
+
 
 def delete_donor(request,pk):
     try:
@@ -217,67 +256,3 @@ def landing_page(request):
     profile = user.profile if hasattr(user, 'profile') else None
     return render(request,'landing_page.html')
 
-def edit_donor(request, donor_id):
-    donor = get_object_or_404(Donor, id=donor_id)
-
-    if request.method == 'POST':
-        donor.Donor_Name = request.POST.get('updated_name')
-        donor.Donor_Age = request.POST.get('updated_age')
-        donor.Donor_BloodType = request.POST.get('updated_blood_type')
-        donor.Donor_Address = request.POST.get('updated_address')
-        donor.Donor_Phone = request.POST.get('updated_phone')
-        donor.save()
-        messages.success(request, 'Donor updated successfully')
-        return redirect('dashboard')
-
-    return render(request, 'edit_donor.html', {'donor': donor})
-
-
-def edit_donor(request, pk):
-    donor = get_object_or_404(Donor, pk=pk)
-
-    if request.method == 'POST':
-        form = DonorForm(request.POST, instance=donor)
-        if form.is_valid():
-            form.save()
-            # Redirect to a success page or wherever appropriate
-            return redirect('dashboard')
-
-    else:
-        form = DonorForm(instance=donor)
-
-    return render(request, 'edit_donor.html', {'form': form, 'donor': donor})
-
-@login_required
-def edit_receipent(request, pk):
-    receipent = get_object_or_404(Receipent, id=pk)
-
-    if request.method == 'POST':
-        receipent.Receipent_Name = request.POST.get('updated_name')
-        receipent.Receipent_Age = request.POST.get('updated_age')
-        receipent.Receipent_BloodType = request.POST.get('updated_blood_type')
-        receipent.Receipent_Address = request.POST.get('updated_address')
-        receipent.Receipent_Email = request.POST.get('updated_email')
-        receipent.Receipent_Phone = request.POST.get('updated_phone')
-        receipent.Receipent_Hospital = request.POST.get('updated_hospital')
-        receipent.save()
-        messages.success(request, 'Receipent updated successfully')
-        return redirect('dashboard')
-
-    return render(request, 'edit_receipent.html', {'receipent': receipent})
-
-@login_required
-def edit_receipent(request, pk):
-    receipent = get_object_or_404(Receipent, pk=pk)
-
-    if request.method == 'POST':
-        form = ReceipentForm(request.POST, instance=receipent)
-        if form.is_valid():
-            form.save()
-            # Redirect to a success page or wherever appropriate
-            return redirect('dashboard')
-
-    else:
-        form = ReceipentForm(instance=receipent)
-
-    return render(request, 'edit_receipent.html', {'form': form, 'receipent': receipent})

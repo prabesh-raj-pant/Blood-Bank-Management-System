@@ -30,8 +30,8 @@ urlpatterns = [
     path('donors/<pk>/delete',delete_donor),
     path('receipent/<pk>/delete',delete_receipent),
     
-    path('edit_donor/<int:pk>/', edit_donor, name='edit_donor'),
-    path('edit_receipent/<int:pk>/', edit_receipent, name='edit_receipent'),
+    path('donor/<pk>/edit_donor',edit_donor),
+    path('receipent/<pk>/edit_receipent',edit_receipent),
 
      
     
