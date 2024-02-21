@@ -1,10 +1,12 @@
 from django.views import View
 from django.contrib import admin
 from django.urls import path,include
+from .views import index, about, donor, bloodrequest, register, AuthView, user_login, logout, custom_logout, dashboard, landing_page, delete_donor, delete_receipent, edit_donor, edit_receipent
+
 
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index, name='index'),
@@ -22,25 +24,20 @@ urlpatterns = [
     path('dashboard/',dashboard,name='dashboard'),
     path('landing_page/',landing_page,name='landing_page'),
     path('index/',index,name='index'),
-    path('donors/', DonorList.as_view(), name='donor-list'),
-    path('donors/<int:pk>/', DonorDetail.as_view(), name='donor-detail'),
+
     
     path('donors/<pk>/delete',delete_donor),
     path('receipent/<pk>/delete',delete_receipent),
     
-    path('receipents/', ReceipentList.as_view(), name='receipent-list'),
-    path('receipents/<int:pk>/', ReceipentDetail.as_view(), name='receipent-detail'),
+    path('edit_donor/<int:pk>/', edit_donor, name='edit_donor'),
+    path('edit_receipent/<int:pk>/', edit_receipent, name='edit_receipent'),
 
-
-    path('bloodbanks/', BloodBankList.as_view(), name='bloodbank-list'),
-    path('bloodbanks/<int:pk>/', BloodBankDetail.as_view(), name='bloodbank-detail'),
+     
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 
-    
-     
      
      
 

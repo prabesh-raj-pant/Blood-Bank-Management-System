@@ -200,7 +200,7 @@
         {% endif %}
             <form action="{% url 'bloodrequest'%}" method="post">
                 {% csrf_token %}
-                <label for="name">Full Name:</label>
+                <label for="name">Patient Name:</label>
                 <input type="text" id="name" name="name" required>
 
                 <label for="Address">Address:</label>
@@ -229,6 +229,12 @@
 
                 <label for="hospital">Hospital Name:</label>
                 <input type="text" id="hospital" name="hospital" required>
+
+                <label for="urgency">Urgency:</label>
+                <select id="urgency" name="urgency" required>
+                <option value="Immediate">Immediate</option>
+                <option value="Non-urgent">Non-urgent</option>
+                </select>
 
                 <button type="submit">Submit Request</button>
             </form>

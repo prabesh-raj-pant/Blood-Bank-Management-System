@@ -1,8 +1,7 @@
-# views.py
-from rest_framework.views import APIView
-from rest_framework.response import Response
+
+from django.shortcuts import render,redirect
 from rest_framework import status
-from django.shortcuts import render,redirect,HttpResponse
+from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from .models import *
@@ -14,6 +13,14 @@ from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as django_logout
 from .forms import ProfileForm
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from .models import Donor
+from django.views.decorators.http import require_POST
+from django.shortcuts import  get_object_or_404
+from django import forms
+from .forms import DonorForm, ReceipentForm
+
 
 def index(request):
     return render(request,'index.html')
@@ -60,7 +67,7 @@ def get_object(self, pk):
     try:
         return Donor.objects.get(pk=pk)
     except Donor.DoesNotExist:
-        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+        return HttpResponse({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
  
 def bloodrequest(request):
@@ -206,118 +213,67 @@ def landing_page(request):
     profile = user.profile if hasattr(user, 'profile') else None
     return render(request,'landing_page.html')
 
+def edit_donor(request, donor_id):
+    donor = get_object_or_404(Donor, id=donor_id)
+
+    if request.method == 'POST':
+        donor.Donor_Name = request.POST.get('updated_name')
+        donor.Donor_Age = request.POST.get('updated_age')
+        donor.Donor_BloodType = request.POST.get('updated_blood_type')
+        donor.Donor_Address = request.POST.get('updated_address')
+        donor.Donor_Phone = request.POST.get('updated_phone')
+        donor.save()
+        messages.success(request, 'Donor updated successfully')
+        return redirect('dashboard')
+
+    return render(request, 'edit_donor.html', {'donor': donor})
 
 
-class DonorList(APIView):
-    def get(self, request):
-        donors = Donor.objects.all()
-        serializer = DonorSerializer(donors, many=True)
-        return Response(serializer.data)
+def edit_donor(request, pk):
+    donor = get_object_or_404(Donor, pk=pk)
 
-    def post(self, request):
-        serializer = DonorSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+    if request.method == 'POST':
+        form = DonorForm(request.POST, instance=donor)
+        if form.is_valid():
+            form.save()
+            # Redirect to a success page or wherever appropriate
+            return redirect('dashboard')
 
-class DonorDetail(APIView):
-    def get_object(self, pk):
-        try:
-            return Donor.objects.get(pk=pk)
-        except Donor.DoesNotExist:
-            return Response()
+    else:
+        form = DonorForm(instance=donor)
 
-    def get(self, request, pk):
-        donor = self.get_object(pk)
-        serializer = DonorSerializer(donor)
-        return Response(serializer.data)
+    return render(request, 'edit_donor.html', {'form': form, 'donor': donor})
 
-    def put(self, request, pk):
-        donor = self.get_object(pk)
-        serializer = DonorSerializer(donor, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+@login_required
+def edit_receipent(request, pk):
+    receipent = get_object_or_404(Receipent, id=pk)
 
-    def delete(self, request, pk):
-        donor = self.get_object(pk)
-        donor.delete()
-        return Response()
+    if request.method == 'POST':
+        receipent.Receipent_Name = request.POST.get('updated_name')
+        receipent.Receipent_Age = request.POST.get('updated_age')
+        receipent.Receipent_BloodType = request.POST.get('updated_blood_type')
+        receipent.Receipent_Address = request.POST.get('updated_address')
+        receipent.Receipent_Email = request.POST.get('updated_email')
+        receipent.Receipent_Phone = request.POST.get('updated_phone')
+        receipent.Receipent_Hospital = request.POST.get('updated_hospital')
+        receipent.save()
+        messages.success(request, 'Receipent updated successfully')
+        return redirect('dashboard')
 
-class ReceipentList(APIView):
-    def get(self, request):
-        receipents = Receipent.objects.all()
-        serializer = ReceipentSerializer(receipents, many=True)
-        return Response(serializer.data)
+    return render(request, 'edit_receipent.html', {'receipent': receipent})
 
-    def post(self, request):
-        serializer = ReceipentSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+@login_required
+def edit_receipent(request, pk):
+    receipent = get_object_or_404(Receipent, pk=pk)
 
-class ReceipentDetail(APIView):
-    def get_object(self, pk):
-        try:
-            return Receipent.objects.get(pk=pk)
-        except Receipent.DoesNotExist:
-            return Response()
+    if request.method == 'POST':
+        form = ReceipentForm(request.POST, instance=receipent)
+        if form.is_valid():
+            form.save()
+            # Redirect to a success page or wherever appropriate
+            return redirect('dashboard')
 
-    def get(self, request, pk):
-        receipent = self.get_object(pk)
-        serializer = ReceipentSerializer(receipent)
-        return Response(serializer.data)
+    else:
+        form = ReceipentForm(instance=receipent)
 
-    def put(self, request, pk):
-        receipent = self.get_object(pk)
-        serializer = ReceipentSerializer(receipent, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
-
-    def delete(self, request, pk):
-        receipent = self.get_object(pk)
-        receipent.delete()
-        return Response()
-
-class BloodBankList(APIView):
-    def get(self, request):
-        bloodbanks = BloodBank.objects.all()
-        serializer = BloodBankSerializer(bloodbanks, many=True)
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = BloodBankSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
-
-class BloodBankDetail(APIView):
-    def get_object(self, pk):
-        try:
-            return BloodBank.objects.get(pk=pk)
-        except BloodBank.DoesNotExist:
-            return Response()
-
-    def get(self, request, pk):
-        bloodbank = self.get_object(pk)
-        serializer = BloodBankSerializer(bloodbank)
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        bloodbank = self.get_object(pk)
-        serializer = BloodBankSerializer(bloodbank, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
-
-    def delete(self, request, pk):
-        bloodbank = self.get_object(pk)
-        bloodbank.delete()
-        return Response()
+    return render(request, 'edit_receipent.html', {'form': form, 'receipent': receipent})
