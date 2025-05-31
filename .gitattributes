@@ -1,2 +1,2 @@
-/backend/* linguist-detectable=true
+linguist-detectable=true
 *.py linguist-language=Python
